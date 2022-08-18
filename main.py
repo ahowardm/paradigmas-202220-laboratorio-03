@@ -1,5 +1,6 @@
 from parse_options import ParseOptions
 from csv_reader import CsvReader
+from csv_writer import CsvWriter
 
 from exporters.tables_by_region_exporter import TablesByRegionExporter
 from exporters.general_results_exporter import GeneralResultsExporter
@@ -20,14 +21,20 @@ if __name__ == '__main__':
             data = reader.read_file()
         elif option_selected == 2:
             filename = ask_for_filename()
-            exporter = TablesByRegionExporter(data, filename)
-            exporter.export()
+            exporter = TablesByRegionExporter(data)
+            exported_data = exporter.export()
+            writer = CsvWriter(filename, exported_data)
+            writer.write_to_file()
         elif option_selected == 3:
             filename = ask_for_filename()
-            exporter = GeneralResultsExporter(data, filename)
-            exporter.export()
+            exporter = GeneralResultsExporter(data)
+            exported_data = exporter.export()
+            writer = CsvWriter(filename, exported_data)
+            writer.write_to_file()
         elif option_selected == 4:
             filename = ask_for_filename()
             local = input('Ingresa el nombre del local a graficar (debe estar igual que en el archivo): ')
-            exporter = ResultsByLocalExporter(data, filename, local)
-            exporter.export()
+            exporter = ResultsByLocalExporter(data, local)
+            exported_data = exporter.export()
+            writer = CsvWriter(filename, exported_data)
+            writer.write_to_file()

@@ -1,11 +1,10 @@
 class GeneralResultsExporter:
-    def __init__(self, data, filename):
+    def __init__(self, data):
         self.data = data
-        self.filename = filename
 
     def export(self):
         self.count_results()
-        self.write_to_file()
+        return self.count
 
     def count_results(self):
         self.count = {}
@@ -17,9 +16,3 @@ class GeneralResultsExporter:
 
     def get_unique_candidates(self):
         return list(self.count.keys())
-
-    def write_to_file(self):
-        file = open(self.filename, 'w')
-        for candidate in self.get_unique_candidates():
-            file.write(f'{candidate};{self.count[candidate]}\n')
-        file.close()
